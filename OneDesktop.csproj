@@ -51,6 +51,13 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="RabbitMQ.Client, Version=2.6.1.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\PowerPoint_SMB\PowerPoint_SMB\bin\Debug\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="SMBLib">
+      <HintPath>..\..\PowerPoint_SMB\PowerPoint_SMB\bin\Debug\SMBLib.dll</HintPath>
+    </Reference>
     <Reference Include="SuperMap.Data, Version=6.0.0.0, Culture=neutral, PublicKeyToken=0635c574ea890381, processorArchitecture=x86" />
     <Reference Include="SuperMap.Data.Conversion, Version=6.0.0.0, Culture=neutral, PublicKeyToken=0635c574ea890381, processorArchitecture=x86" />
     <Reference Include="SuperMap.Data.Processing, Version=6.0.0.0, Culture=neutral, PublicKeyToken=0635c574ea890381, processorArchitecture=x86" />
@@ -79,7 +86,31 @@
   <ItemGroup>
     <Compile Include="DesktopPlugin.cs" />
     <Compile Include="CtrlAction.cs" />
+    <Compile Include="FormDialogue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDialogue.Designer.cs">
+      <DependentUpon>FormDialogue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLogin.Designer.cs">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SMBDelegate.cs" />
+    <Compile Include="UCDialogue.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCDialogue.Designer.cs">
+      <DependentUpon>UCDialogue.cs</DependentUpon>
+    </Compile>
     <None Include="OneDesktop.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -101,6 +132,21 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FormDialogue.resx">
+      <DependentUpon>FormDialogue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLogin.resx">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCDialogue.resx">
+      <DependentUpon>UCDialogue.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
