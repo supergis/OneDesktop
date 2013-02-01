@@ -1,17 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Forms;
+
 using com.supermap.smb;
 
 namespace OneDesktop
 {
     public class SMBDelegate
     {
-        DesktopPlugin m_plugin = null;
+        private SMBClient m_SMBClient = null;
 
-        public SMBDelegate(DesktopPlugin mainHandler) 
+        private String m_strSender = "";
+        private String m_strInExchange = "";
+        private String m_strTargetExchange = "";
+        public String m_strMQServer = "42.120.50.220";
+
+        UCDialogue m_Panel = null;
+
+        public SMBDelegate(UCDialogue mainHandler) 
         {
-            m_plugin = mainHandler;
+            m_Panel = mainHandler;
 
             m_SMBClient = new SMBClient();
             m_SMBClient.SMBMessageReceived += onSMBReceived;     // 指定 接收并处理消息的 回调函数
@@ -24,6 +33,8 @@ namespace OneDesktop
             m_SMBClient.setInExchange(m_strInExchange);              // 接收频道
             m_SMBClient.setTargetExchange( m_strTargetExchange );    // 目的频道
 
+            m_SMBClient.setExtServer(m_strMQServer);
+
             return m_SMBClient.Connect(strUserName, strPassword);    // 目前只能用guest/guest连接，以后会用strUserName/strPassword来验证用户的账户
         }
 
@@ -32,10 +43,12 @@ namespace OneDesktop
           // 回传的状态 nStatus 值的含义： 0--正在连接中； 1--已经连接成功
             if (nStatus == 0)
             {
+                m_Panel.onSMBStatus("连接中...");
                 System.Console.WriteLine("连接中...");  // 在此仅仅简单地在命令行窗口中输出信息而已
             }
             else if (nStatus == 1)
             {
+                m_Panel.onSMBStatus("已连接！");
                 System.Console.WriteLine("已连接！"); // 在此仅仅简单地在命令行窗口中输出信息而已
             }
         }
@@ -63,7 +76,7 @@ namespace OneDesktop
                     //PublishText(strResult);
                 }
 
-                //m_smbPanel.onSMBReceived(smbMsg);
+                m_Panel.onSMBReceived(smbMsg);
                 //invoke(
                 System.Console.WriteLine(strMsg);   // 在此仅仅简单地在命令行窗口中输出信息而已
 
@@ -77,8 +90,16 @@ namespace OneDesktop
 		    } else {
 			    return 0;
 		    }
-	    }
-    	
+	    }    	
+        
+        public void setMQServer(String strMQServer)
+        {
+            if (strMQServer != null && strMQServer.Length > 0)
+            {
+                m_strMQServer = strMQServer;
+            }
+        }        
+
 	    public void setSender( String strSender )
         {// 设置 发送者
 		    m_strSender = strSender;
@@ -110,10 +131,5 @@ namespace OneDesktop
             }
         }
 
-        private SMBClient       m_SMBClient = null;
-
-        private String m_strSender = "";
-        private String m_strInExchange = "";
-        private String m_strTargetExchange = "";
     }
 }

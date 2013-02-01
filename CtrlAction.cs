@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using SuperMap.Desktop;
 using SuperMap.Data;
+using com.supermap.smb;
 
 namespace OneDesktop
 {
