@@ -30,6 +30,12 @@ namespace OneDesktop
         public bool Connect( String strUserName, String strPassword)
         { // 连接消息服务，需要根据回传的状态信息才能判断是否连接成功，参见 onSMBStatusChanged(...)方法
             m_SMBClient.setSender( m_strSender );                    // 发送者
+
+            //New Version?
+            //m_SMBClient.setInExchangeParam(m_strInExchange, "fanout", false, "");
+            //m_SMBClient.setOutExchangeParam("MapDroid", "direct", true, "smGateWay");
+            //m_SMBClient.s
+            
             m_SMBClient.setInExchange(m_strInExchange);              // 接收频道
             m_SMBClient.setTargetExchange( m_strTargetExchange );    // 目的频道
 
